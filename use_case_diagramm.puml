@@ -1,0 +1,37 @@
+@startuml
+actor Customer
+actor Seller
+actor WebSite
+
+together {
+    left to right direction
+
+    Customer --> (view catalog of goods)
+    (sort by cost) --> (view catalog of goods): <extend>
+      (sort low to hight) --> (sort by cost): <extend>
+      (sort hight to low) --> (sort by cost): <extend>
+    (search good by name) --> (view catalog of goods): <extend>
+    (sort by categories) --> (view catalog of goods): <extend>
+    (add to cart) --> (view catalog of goods): <extend>
+    (view good description) --> (view catalog of goods): <extend>
+    (view good description) <-- (add to cart): <extend>
+    (process order) --> (create order): <include>
+
+    (view catalog of goods) <-- WebSite
+    (manage of list orders) <-- WebSite
+    (authorization) <-- WebSite
+    (manage catalog of goods) <-- WebSite
+
+    Customer --> (create order)
+      (create order) --> (add phone number): <include>
+      (create order) --> (add email): <include>
+
+    Seller --> (authorization)
+    (authorization) --> (manage list of orders)
+      (manage list of orders) <-- (delete order): <extend>
+      (manage list of orders) <-- (edit order): <extend>
+    (authorization)--> (manage catalog of goods)
+      (manage catalog of goods) <-- (manage goods): <extend>
+      (manage catalog of goods) <-- (get data from 1c db): <extend>
+}
+@enduml

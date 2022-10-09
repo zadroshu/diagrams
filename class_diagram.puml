@@ -1,0 +1,45 @@
+@startuml
+class WebSite {
+    +ipAdress: Stirng
+    +URL: String
+}
+class AdminPanel {
+    +ipAdress: Stirng
+    +URL: String
+}
+class Admin {
+    -login: String
+    -passwordHash: Strng
+}
+class Good {
+    +id: int
+    +name: Strng
+    +category: Category
+    +cost: int
+    +discount: int
+    +descriptions: Map<String, String>
+}
+
+class Category {
+    category: int
+    parentCategory: int
+}
+
+class Order {
+    +customerPhoneNumber: String
+    +customerEmail: String
+    +orderId: int
+    +date: Date
+    +goods: ArrayList<Good>
+}
+
+
+WebSite o-- Good
+WebSite -- AdminPanel
+
+AdminPanel "1..1" o-- "0..*" Admin
+
+Order "0..*" o-- "0..*" Good : Содержит
+
+Good  "1..1 " o-- "1..1 " Category
+@enduml
