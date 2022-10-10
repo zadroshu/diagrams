@@ -1,22 +1,29 @@
 @startuml
 'https://plantuml.com/component-diagram
 
+()"I1"
+()"I2"
+
 package "Client" {
   [Client Application \n Vue.js] - [Client Application \n Server]
   [Client Application \n Server] - [Web browser]
+  [Web browser] <- I1
 }
-package "Business Logic"{
-  [Service] - [Backend Application \n (PHP)]
-  [Backend Application \n (PHP)] - [Backend Application \n Web Server]
+package "Web Server"{
+  package "Business Logic"{
+    [Service] - [Backend Application \n (PHP)]
+    I1 <- [Service]
+    [Backend Application \n (PHP)] <- I2
+  }
 }
-[Service] - [Client Application \n Server]
-[Data Source] - [Backend Application \n Web Server]
+
+[Backend Application \n (PHP)] - [Data Source]
 package "Data layer"{
   database "Data Source" {
   }
   file "XML file" {
   }
+  I2 <- [Data Source]
 }
-
 
 @enduml
